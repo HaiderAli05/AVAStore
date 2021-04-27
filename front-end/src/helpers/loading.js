@@ -1,0 +1,16 @@
+import React,{Fragment} from 'react'
+
+export const showLoading = () => (
+    <Fragment>
+    <div className="spinner-grow text-warning" role="status">
+        <span className="visually-hidden">Loading...</span>
+    </div>
+    <div className="spinner-grow text-danger" role="status">
+        <span className="visually-hidden">Loading...</span>
+    </div>
+    <div className="spinner-grow text-success" role="status">
+        <span className="visually-hidden">Loading...</span>
+    </div>
+    </Fragment>
+    
+)
