@@ -1,30 +1,22 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
-    },
-    orderItems: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
-            required: true,
             ref: 'Product'
         },
         orderImg: {
             type: String,
-            required: true
         },
         title: {
             type: String,
             required: true
         },
-        qty: {
+        quantity: {
             type: Number,
-            required: true
+            default: 1
         },
-        price: {
+        totalPrice: {
             type: Number,
             required: [true, 'Please add a price']
         },
@@ -34,9 +26,8 @@ const orderSchema = mongoose.Schema({
         },
         status: {
             type: String,
+            require: true
         }
-    }],
-      
 },
 {
     timestamps: true

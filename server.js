@@ -11,6 +11,7 @@ require(path.join(__dirname, './db/conn'));
 const userRoutes = require(path.join(__dirname, './api/routes/user'));
 const privateRoutes = require(path.join(__dirname, './api/routes/privateRoute'));
 const productRoutes = require(path.join(__dirname, './api/routes/productRoute'));
+const orderRoutes = require(path.join(__dirname, './api/routes/orderRoute'));
 
 
 //MiddleWares
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'front-end/build')));
 app.use('/api/user', userRoutes);
 app.use('/api/privatepage', privateRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 
 // GET request for Main Index page

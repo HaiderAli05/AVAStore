@@ -2,8 +2,6 @@ const router = require('express').Router();
 const { registerValidator, loginValidator, validatorResult } = require('../middlewares/validator.js');
 const { registerController,loginController, userUpdateController } = require('../controllers/user.js');
 const adminVerify = require('../middlewares/verifyAdmin');
-const userVerify = require('../middlewares/verifyUser');
-const bothVerify = require('../middlewares/verifyBoth');
 
 //POST Request for Create a new User Account
 router.post('/register', registerValidator, validatorResult, registerController);

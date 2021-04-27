@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const Product = require('../models/productModel');
 const adminVerify = require('../middlewares/verifyAdmin');
-const userVerify = require('../middlewares/verifyUser');
-const bothVerify = require('../middlewares/verifyBoth');
 const uploadPics = require('../middlewares/uploadPics');
 
 //POST request (Add a new Product)
@@ -49,7 +47,7 @@ router.get('/',async (req,res)=>{
     }
 });
 //GET request for a Single Product
-router.get('/:id',bothVerify, async (req,res)=>{
+router.get('/:id', async (req,res)=>{
     try{
         const thisProduct = await Product.findById({_id: req.params.id});
         res.json({

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = function(req,res,next){
-    const token = req.header('authToken') || req.cookies.authToken;
-    if(!token) return res.status(401).sendFile(path.join(__dirname,'../../public/logIn.html'));
+    const token = req.header('authToken') ;
+    if(!token) return res.status(401).json({message: 'UnAuthorized request.'});
     try {
         const verified = jwt.verify(token, process.env.USER_TOKEN);
         req.user = verified;
