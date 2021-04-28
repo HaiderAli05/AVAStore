@@ -13,7 +13,6 @@ const privateRoutes = require(path.join(__dirname, './api/routes/privateRoute'))
 const productRoutes = require(path.join(__dirname, './api/routes/productRoute'));
 const orderRoutes = require(path.join(__dirname, './api/routes/orderRoute'));
 
-
 //MiddleWares
 app.use(express.json());
 app.use(cors());

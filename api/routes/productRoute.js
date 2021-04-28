@@ -1,40 +1,38 @@
 const router = require('express').Router();
 const Product = require('../models/productModel');
 const adminVerify = require('../middlewares/verifyAdmin');
-const uploadPics = require('../middlewares/uploadPics');
+const upload= require('../middlewares/uploadPics');
 const cloudinary = require('cloudinary').v2;
 require('../middlewares/cloudinary.js');
 
 //POST request (Add a new Product)
-router.post('/addproduct',adminVerify,async (req,res)=>{
-    await uploadPics(req,res, async (err)=>{
-        const productExist = await Product.findOne({title: req.body.title});
-        if(req.file == undefined){
-            return res.status(400).json({message: 'Please add an image'});//Check if Image added or not
-        }else if(productExist){
-            return res.status(400).json({message: 'Product already exist with same title.'});//Check if product already Exists
-        }else{
-            const imgCloudPath = await cloudinary.uploader.upload(req.file.path);
-            //Add a new Product
-            const product = new Product({
-                productImg: imgCloudPath.secure_url,
-                title: req.body.title,
-                description: req.body.description,
-                price: req.body.price,
-                delivery: req.body.delivery
-            });
-            try{
+router.post('/addproduct',adminVerify, upload.single('productImg'), async (req,res)=>{    
+        try{
+            const productExist = await Product.findOne({title: req.body.title});
+            if(req.file === undefined){
+                return res.status(400).json({message: 'Please add an image'});//Check if Image added or not
+            }else if(productExist){
+                return res.status(400).json({message: 'Product already exist with same title.'});//Check if product already Exists
+            }else{
+                const imgCloudPath = await cloudinary.uploader.upload(req.file.path);
+                //Add a new Product
+                const product = new Product({
+                    productImg: imgCloudPath.secure_url,
+                    title: req.body.title,
+                    description: req.body.description,
+                    price: req.body.price,
+                    delivery: req.body.delivery
+                });
                 const savedProduct = await product.save();
                 res.json({
                     message: 'Product Added.',
                     error: null,
                     data: savedProduct
                 });
-            }catch(err){
-                res.status(400).json({message: `${err.message}`});
             }
+        }catch(err){
+            res.status(400).json({message: `${err.message}`});
         }
-    });
 });
 //GET request (Show all Products)
 router.get('/',async (req,res)=>{
