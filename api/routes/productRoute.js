@@ -2,6 +2,8 @@ const router = require('express').Router();
 const Product = require('../models/productModel');
 const adminVerify = require('../middlewares/verifyAdmin');
 const uploadPics = require('../middlewares/uploadPics');
+const cloudinary = require('cloudinary').v2;
+require('../middlewares/cloudinary.js');
 
 //POST request (Add a new Product)
 router.post('/addproduct',adminVerify,async (req,res)=>{
@@ -12,9 +14,10 @@ router.post('/addproduct',adminVerify,async (req,res)=>{
         }else if(productExist){
             return res.status(400).json({message: 'Product already exist with same title.'});//Check if product already Exists
         }else{
+            const imgCloudPath = await cloudinary.uploader.upload(req.file.path);
             //Add a new Product
             const product = new Product({
-                productImg: req.file.path,
+                productImg: imgCloudPath.secure_url,
                 title: req.body.title,
                 description: req.body.description,
                 price: req.body.price,
