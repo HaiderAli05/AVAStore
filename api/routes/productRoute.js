@@ -7,7 +7,7 @@ require('../middlewares/cloudinary.js');
 
 //POST request (Add a new Product)
 router.post('/addproduct',adminVerify,async (req,res)=>{
-    uploadPics(req,res, async (err)=>{
+    await uploadPics(req,res, async (err)=>{
         const productExist = await Product.findOne({title: req.body.title});
         if(req.file == undefined){
             return res.status(400).json({message: 'Please add an image'});//Check if Image added or not
