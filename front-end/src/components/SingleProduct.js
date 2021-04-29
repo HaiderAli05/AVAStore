@@ -49,35 +49,17 @@ export default class SingleProduct extends Component {
             <section className="py-custom">
                 <div className="container">
                     <div className="row">
-                        <div className="col-12">
-                            <h2 className="display-4 text-center text-secondary mb-5">{this.state.loading || !this.state.product ? (`Product`):(`ID: ${this.state.product.data._id}`)}</h2>
+                        <div className="col-md-12">
+                            <h2 className="display-6 text-center text-secondary mb-5">{this.state.loading || !this.state.product ? (`Product`):(`Product ID: ${this.state.product.data._id}`)}</h2>
                         </div>
-                    </div>
-                    {this.state.loading || !this.state.product ? (
-                        <div className="row">
-                            <div className="col-12 text-center">
-                                <div className="spinner-grow text-warning" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                                <div className="spinner-grow text-danger" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                                <div className="spinner-grow text-success" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        </div>
-                    ): (
-                        <div className="row">
                             {getTokenInStorage() && getUserRole() === 1 && (
                                 <Fragment>
-                                <div className="col-12 d-flex pb-3">
-                                        <span className="me-auto">
+                                    <div className="col-md-12 d-flex pb-3">
+                                        <span className="ms-auto">
                                             <button to={`/products/${this.state.productId}/editProduct`} class="btn btn-outline-secondary me-2">Edit</button>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                 Delete
                                             </button>
-                                            
                                         </span>
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -97,13 +79,25 @@ export default class SingleProduct extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-12">
-                                        
-                                        
-                                    </div>
                                 </Fragment>
                             )}
-                            
+                    </div>
+                    {this.state.loading || !this.state.product ? (
+                        <div className="row">
+                            <div className="col-12 text-center">
+                                <div className="spinner-grow text-warning" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                <div className="spinner-grow text-danger" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                                <div className="spinner-grow text-success" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    ): (
+                        <div className="row">
                             <form method="post" action={`/products/${this.state.productId}`}>
                                 <div className="row">
                                     <div className="col-6">
