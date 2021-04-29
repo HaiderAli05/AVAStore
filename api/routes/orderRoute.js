@@ -53,7 +53,7 @@ router.get('/', adminVerify, async (req,res)=>{
 //GET request for a Single Order
 router.get('/:id', userVerify,async (req,res)=>{
     try{
-        const userOrders = await Order.findById({userId: req.params.id});
+        const userOrders = await Order.findOne({userId: req.params.id});
         res.json({
             message: 'Single Order',
             error: null,
