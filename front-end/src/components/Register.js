@@ -75,7 +75,7 @@ const Register = () => {
                         loading: false,
                         successMsg: response.data.successMessage,
                     });
-                    history.push('/api/user/login');
+                    history.push('/login');
                 })
                 .catch((err) =>{
                     console.log('Axios Register error', err);
@@ -89,48 +89,51 @@ const Register = () => {
 
     };
     return(
-        <div className="bg-secondary rounded shadow text-white col-lg-8 col-md-10 p-5 m-auto">
-            <form className="row g-3 lead" method="post" action="/api/user/register" onSubmit={handleSubmit}>
-                <h2 className="register-title text-center display-6">Create an Account</h2>
-                <div className="col-md-6">
-                    <label for="firstName" className="form-label">First Name</label>
-                    <input type="text" className="form-control bg-light text-secondary" id="firstName" name="firstName" value={firstName} onChange={handleChange} required />
-                </div>
-                <div className="col-md-6">
-                    <label for="lastName" className="form-label">Last Name</label>
-                    <input type="text" className="form-control bg-light text-secondary" id="lastName" name="lastName" value={lastName} onChange={handleChange} required />
-                </div>
-                <div className="col-md-12">
-                    <label for="email" className="form-label">Email</label>
-                    <input type="email" className="form-control bg-light text-secondary" id="email" name="email" value={email} onChange={handleChange} required />
-                </div>
-                <div className="col-md-6">
-                    <label for="password" className="form-label">Password</label>
-                    <input type="password" className="form-control bg-light text-secondary" id="password" name="password" value={password} onChange={handleChange} required />
-                </div>
-                <div className="col-md-6">
-                    <label for="confirmPassword" className="form-label">Confirm Password</label>
-                    <input type="password" className="form-control bg-light text-secondary" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={handleChange} required />
-                </div>
-                <div className="col-md-6">
-                    <label for="phone" className="form-label">Phone</label>
-                    <input type="number" className="form-control bg-light text-secondary" id="phone" name="phone" value={phone} onChange={handleChange} required />
-                </div>
-                <div className="col-md-6">
-                    <label for="country" className="form-label">Country</label>
-                    <input type="text" className="form-control bg-light text-secondary" id="country" name="country" value={country} onChange={handleChange} required />
-                </div>
-                <div className="col-md-12">
-                    <button type="submit" className="btn btn-outline-light w-100 my-3">Register</button>
-                </div>
-                {errorMsg && showErrorMessage(errorMsg)}
-                {successMsg && showSuccessMessage(successMsg)}
-                <div className="text-center">{loading && showLoading(loading)}</div>
-                <div className="col-md-12">
-                    <p className="lead mt-3">Have an account? <Link to="/api/user/login" className="text-white-50">LogIn</Link></p>
-                </div>
-            </form>
-        </div>
+        <section className="container py-custom">
+            <div className="bg-secondary rounded shadow text-white col-lg-8 col-md-10 p-5 m-auto">
+                <form className="row g-3 lead register-form" method="post" action="/api/user/register" onSubmit={handleSubmit}>
+                    <h2 className="register-title text-center display-6">Create an Account</h2>
+                    <div className="col-md-6">
+                        <label for="firstName" className="form-label">First Name</label>
+                        <input type="text" className="form-control bg-light text-secondary" id="firstName" name="firstName" value={firstName} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label for="lastName" className="form-label">Last Name</label>
+                        <input type="text" className="form-control bg-light text-secondary" id="lastName" name="lastName" value={lastName} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-12">
+                        <label for="email" className="form-label">Email</label>
+                        <input type="email" className="form-control bg-light text-secondary" id="email" name="email" value={email} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label for="password" className="form-label">Password</label>
+                        <input type="password" className="form-control bg-light text-secondary" id="password" name="password" value={password} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label for="confirmPassword" className="form-label">Confirm Password</label>
+                        <input type="password" className="form-control bg-light text-secondary" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label for="phone" className="form-label">Phone</label>
+                        <input type="number" className="form-control bg-light text-secondary" id="phone" name="phone" value={phone} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label for="country" className="form-label">Country</label>
+                        <input type="text" className="form-control bg-light text-secondary" id="country" name="country" value={country} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-12">
+                        <button type="submit" className="btn btn-outline-light w-100 mt-3">Register</button>
+                    </div>
+                    {errorMsg && showErrorMessage(errorMsg)}
+                    {successMsg && showSuccessMessage(successMsg)}
+                    <div className="text-center">{loading && showLoading(loading)}</div>
+                    <div className="col-md-12">
+                        <p className="lead">Have an account? <Link to="/login" className="text-white-50">LogIn</Link></p>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
     )
 };
 export default Register;

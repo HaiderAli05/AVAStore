@@ -20,26 +20,23 @@ const App = () => {
   return(
     <BrowserRouter>
       <Header />
-      <main className="bg-light w-100 h-auto py-5">
-        <div className="container">
-          <Switch>
+      <main className="bg-light">
+      <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/products' component={Products} />
-            <Route exact path='/api/products/:id' component={SingleProduct} />
-            <AdminRoute exact path='/api/user/:id' component={AdminDashboard} />
-            <AdminRoute exact path='/admin/orders' component={AdminOrders} />
-            <UserRoute exact path='/api/user/:id' component={UserDashboard} />
-            <UserRoute exact path='/user/orders' component={UserOrders} />
+            <Route exact path='/products/:id' component={SingleProduct} />
+            <AdminRoute exact path='/admin/dashboard' component={AdminDashboard} />
+            <AdminRoute exact path='/orders' component={AdminOrders} />
+            <UserRoute exact path='/user/dashboard' component={UserDashboard} />
+            <UserRoute exact path='/orders/:id' component={UserOrders} />
             <Route exact path='/login' component={LogIn} />
             <Route exact path='/register' component={Register} />
             <Route component={NotFound} />
           </Switch>
-        </div>
       </main>
       <Footer />
     </BrowserRouter>
   )
-  
 };
 
 export default App;

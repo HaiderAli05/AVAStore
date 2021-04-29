@@ -6,7 +6,7 @@ const adminVerify = require('../middlewares/verifyAdmin.js');
 const userVerify = require('../middlewares/verifyUser.js');
 //POST request (Add a new Order)
 router.post('/addOrder',userVerify,async (req,res)=>{
-    const {productId,orderImg,title,quantity,totalPrice,status} = req.body;
+    const {userId,userEmail,productId,title,unitPrice,quantity,totalPrice,status} = req.body;
     try {
         //Check if Order already Exists
         const order = await Order.findOne({title: title});
@@ -16,8 +16,11 @@ router.post('/addOrder',userVerify,async (req,res)=>{
         //Create a new Order instance
         const newOrder = new Order();
         _id: mongoose.Schema.Types.ObjectId;
+        newOrder.userId = userId;
         newOrder.productId = productId;
+        newOrder.userEmail = userEmail;
         newOrder.title = title;
+        newOrder.unitPrice = unitPrice;
         newOrder.quantity = quantity || 1;
         newOrder.totalPrice = totalPrice;
         newOrder.status = status || 'Under Review';
@@ -50,11 +53,11 @@ router.get('/', adminVerify, async (req,res)=>{
 //GET request for a Single Order
 router.get('/:id', userVerify,async (req,res)=>{
     try{
-        const thisOrder = await Order.findById({_id: req.params.id});
+        const userOrders = await Order.findById({userId: req.params.id});
         res.json({
             message: 'Single Order',
             error: null,
-            data: thisOrder
+            data: userOrders
         });
     }catch(err){
         res.status(400).json({message: `${err.message}`});

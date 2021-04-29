@@ -65,9 +65,9 @@ const LogIn = () => {
 
                     setFormData({ ...formData, isLoading: false });
                     if(getTokenInStorage() && getUserRole() === 1){
-                        history.push('/admin/dashboard');
+                        history.push('/');
                     }else if(getTokenInStorage() && getUserRole() === 0){
-                        history.push('/user/dashboard');
+                        history.push('/products');
                     }
                 })
                 .catch(err => {
@@ -81,27 +81,30 @@ const LogIn = () => {
     };
     
     return(
-        <div className="bg-secondary rounded shadow text-white col-md-6 p-5 m-auto">
-            <form className="row g-3 lead" method="post" action="/api/user/login"  onSubmit={handleSubmit}>
-                <h2 className="register-title text-center display-6">Log In</h2>
-                <div className="col-12">
-                    <label for="email" className="form-label">Email</label>
-                    <input type="email" className="form-control bg-light text-secondary" id="email" name="email" value={email} onChange={handleChange} required />
-                </div>
-                <div className="col-12">
-                    <label for="password" className="form-label">Password</label>
-                    <input type="password" className="form-control bg-light text-secondary" id="password" name="password" value={password} onChange={handleChange} required />
-                </div>
-                <div className="col-md-12 d-flex justify-content-center">
-                    <button type="submit" className="btn btn-outline-light w-100 mt-3">LogIn</button>
-                </div>
-                {errorMsg && showErrorMessage(errorMsg)}
-                <div className="text-center">{loading && showLoading(loading)}</div>
-                <div className="col-md-12">
-                    <p className="lead mt-3">Don't have account? <Link to="/api/user/register" className="text-white-50">Register</Link></p>
-                </div>
-            </form>
-        </div>
+        <section className="container py-custom">
+            <div className="bg-secondary rounded shadow text-white col-md-6 p-5 m-auto">
+                <form className="row g-3 lead login-form" method="post" action="/api/user/login"  onSubmit={handleSubmit}>
+                    <h2 className="register-title text-center display-6">Log In</h2>
+                    <div className="col-12">
+                        <label for="email" className="form-label">Email</label>
+                        <input type="email" className="form-control bg-light text-secondary" id="email" name="email" value={email} onChange={handleChange} required />
+                    </div>
+                    <div className="col-12">
+                        <label for="password" className="form-label">Password</label>
+                        <input type="password" className="form-control bg-light text-secondary" id="password" name="password" value={password} onChange={handleChange} required />
+                    </div>
+                    <div className="col-md-12 d-flex justify-content-center">
+                        <button type="submit" className="btn btn-outline-light w-100 mt-3">LogIn</button>
+                    </div>
+                    {errorMsg && showErrorMessage(errorMsg)}
+                    <div className="text-center">{loading && showLoading(loading)}</div>
+                    <div className="col-md-12">
+                        <p className="lead">Don't have account? <Link to="/register" className="text-white-50">Register</Link></p>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
     )
 };
 

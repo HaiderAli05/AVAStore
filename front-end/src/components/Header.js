@@ -11,7 +11,7 @@ import {
 const Header = ({history}) => {
     const logout = () => {
         handleSignout(() => {
-            history.push('/api/user/login');
+            history.push('/login');
         });
     }
     const showNavigation = () => (
@@ -56,10 +56,10 @@ const Header = ({history}) => {
                                     <li class="nav-item dropdown">
                                         <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</Link>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <li><Link className="dropdown-item" to="/api/user/:id">Profile</Link></li>
-                                            <li><Link className="dropdown-item" to="/api/user/:id">Orders</Link></li>
+                                            <li><Link className="dropdown-item text-secondary" to="/admin/dashboard">Profile</Link></li>
+                                            <li><Link className="dropdown-item text-secondary" to="/orders">Orders</Link></li>
                                             <li><hr class="dropdown-divider"/></li>
-                                            <li><button className="dropdown-item" onClick={logout} >Logout</button></li>
+                                            <li><button className="dropdown-item text-secondary" onClick={logout} >Logout</button></li>
                                         </ul>
                                     </li>
                                 </Fragment>
@@ -69,10 +69,10 @@ const Header = ({history}) => {
                                     <li class="nav-item dropdown">
                                         <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">User</Link>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <li><Link className="dropdown-item" to="/api/user/:id">Profile</Link></li>
-                                            <li><Link className="dropdown-item" to="/api/user/:id">Orders</Link></li>
+                                            <li><Link className="dropdown-item text-secondary" to="/user/dashboard">Profile</Link></li>
+                                            <li><Link className="dropdown-item text-secondary" to="/orders/:id">Orders</Link></li>
                                             <li><hr class="dropdown-divider"/></li>
-                                            <li><button className="dropdown-item" onClick={logout} >Logout</button></li>
+                                            <li><button className="dropdown-item text-secondary" onClick={logout} >Logout</button></li>
                                         </ul>
                                     </li>
                                 </Fragment>

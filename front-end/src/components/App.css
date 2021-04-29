@@ -1,4 +1,66 @@
-
+.navbar-dark .navbar-nav .nav-link {
+  color: #f8f9fa;
+  border-radius: 2px;
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+  background: #f8f9fa ;
+  color: #6c757d ;
+}
+.dropdown-item.active, .dropdown-item:active{
+  background-color: #6c757d;
+  color: #f8f9fa !important;
+}
+.card-img a{
+  display: inline-block;
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+}
+.product-img{
+  height: inherit;
+  object-fit: contain;
+  object-position: center;
+}
 .product:hover{
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.55) !important;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.55) !important;
+}
+.py-custom{
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+.carousel-control-next, .carousel-control-prev{
+  top: 50%;
+  transform: translateY(-37px);
+  height: 74px;
+  width: 5%;
+  background: #6c757d;
+  border-radius: 3px;
+}
+.carousel-indicators [data-bs-target]{
+  height:5px;
+}
+.AboutUsBg{
+  background-image: url(../img/AboutBg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 50px 15px;
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+  color: #6c757d;
+}
+.table-striped>tbody>tr:nth-of-type(even):hover{
+  color: #6c757d;
+}
+/*****Login Page*****/
+.login-form .btn:hover{
+  color: #6c757d;
+}
+/*****Register Page*****/
+.register-form .btn:hover{
+  color: #6c757d;
+}
+@media screen and (max-width: 768px) {
+  .carousel-control-next, .carousel-control-prev{
+    display: none;
   }
+}
