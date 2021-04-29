@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {Link} from 'react-router-dom';
+import {
+    getTokenInStorage,
+    getUserRole
+} from '../helpers/localStorage.js';
 
 export default class Products extends Component {
     state = {
@@ -12,6 +16,7 @@ export default class Products extends Component {
         const data = await response.json();
         this.setState({products: data.data, loading: false})
     }
+    
     render() {
         return (
             <section className="py-custom">
@@ -36,23 +41,32 @@ export default class Products extends Component {
                             </div>
                         </div>
                     ): (
-                        <div className="row">
-                            {this.state.products.map((data) => (
-                                <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 my-3">
-                                    <div className="card shadow product">
-                                        <div className="card-img">
-                                            <Link to={`products/${data._id}`}><img src={data.productImg} className="card-img-top product-img" alt=""/></Link>
-                                        </div>
-                                        <div className="card-body border-top py-4">
-                                            <h5 className="card-title">{data.title}</h5>
-                                            <p className="card-text">{data.description}</p>
-                                            <p className="prod-price">Price: ${data.price}</p>
-                                            <Link to={`products/${data._id}`} className="btn btn-secondary w-100">View Details</Link>
-                                        </div>
+                        <Fragment>
+                            {getTokenInStorage() && getUserRole() === 1 && (
+                                <div className="row">
+                                    <div className="col-12">
+                                        <Link to="/products/addproduct" class="btn btn-outline-secondary">Add New Product</Link>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            )}
+                            <div className="row">
+                                {this.state.products.map((data) => (
+                                    <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12 my-3">
+                                        <div className="card shadow product">
+                                            <div className="card-img">
+                                                <Link to={`products/${data._id}`}><img src={data.productImg} className="card-img-top product-img" alt=""/></Link>
+                                            </div>
+                                            <div className="card-body border-top py-4">
+                                                <h5 className="card-title">{data.title}</h5>
+                                                <p className="card-text">{data.description}</p>
+                                                <p className="prod-price">Price: ${data.price}</p>
+                                                <Link to={`products/${data._id}`} className="btn btn-secondary w-100">View Details</Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Fragment>
                     )}
                 </div>
             </section>

@@ -14,6 +14,7 @@ import AdminRoute from './AdminRoute.js';
 import UserRoute from './UserRoute.js';
 import AdminOrders from './AdminOrders.js';
 import UserOrders from './UserOrders.js';
+import AddProduct from './AddProduct.js';
 import './App.css';
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
             <Route exact path='/' component={Home} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' component={SingleProduct} />
+            <Route exact path='/products/addproduct' component={AddProduct} />
             <AdminRoute exact path='/admin/dashboard' component={AdminDashboard} />
             <AdminRoute exact path='/orders' component={AdminOrders} />
             <UserRoute exact path='/user/dashboard' component={UserDashboard} />

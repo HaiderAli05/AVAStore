@@ -44,6 +44,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   padding: 50px 15px;
+  background-attachment: fixed;
+  background-position: center;
 }
 .table-striped>tbody>tr:nth-of-type(odd){
   color: #6c757d;

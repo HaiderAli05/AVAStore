@@ -4,7 +4,7 @@ module.exports = function(req,res,next){
     const token = req.header('token');
     if(!token) return res.status(401).json({message: "UnAuthorized request."});
     try {
-        const verified = jwt.verify(token, process.env.ADMIN_TOKEN);
+        const verified = jwt.verify(JSON.parse(token), process.env.ADMIN_TOKEN);
         req.user = verified;
         next();
     } catch (error) {

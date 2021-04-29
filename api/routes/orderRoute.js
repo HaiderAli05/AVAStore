@@ -9,10 +9,10 @@ router.post('/addOrder',userVerify,async (req,res)=>{
     const {userId,userEmail,productId,title,unitPrice,quantity,totalPrice,status} = req.body;
     try {
         //Check if Order already Exists
-        const order = await Order.findOne({title: title});
-        if(order) {
-            return res.status(400).json({message: 'Order already exist with same product.'});
-        }
+        // const order = await Order.findOne({title: title});
+        // if(order) {
+        //     return res.status(400).json({message: 'Order already exist with same product.'});
+        // }
         //Create a new Order instance
         const newOrder = new Order();
         _id: mongoose.Schema.Types.ObjectId;

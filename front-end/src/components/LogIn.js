@@ -65,7 +65,7 @@ const LogIn = () => {
 
                     setFormData({ ...formData, isLoading: false });
                     if(getTokenInStorage() && getUserRole() === 1){
-                        history.push('/');
+                        history.push('/products');
                     }else if(getTokenInStorage() && getUserRole() === 0){
                         history.push('/products');
                     }
