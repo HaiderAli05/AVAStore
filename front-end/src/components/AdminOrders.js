@@ -4,7 +4,7 @@ const AdminOrders = () => {
     return (
         <section>
             <div className="container py-5">
-                <h2 className="display-4 text-secondary m-0 text-center text-uppercase">All Orders</h2>
+                <h2 className="display-4 text-secondary m-0 text-center">All Orders</h2>
                 <table class="table table-striped table-hover table-bordered text-secondary mt-5">
                     <thead>
                         <tr>

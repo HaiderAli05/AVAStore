@@ -35,6 +35,12 @@ const Header = ({history}) => {
                             <Link className="nav-link" to="/products">Products</Link>
                             </li>
                             <li className="nav-item">
+                            <Link className="nav-link" to="/aboutus">About Us</Link>
+                            </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to="/contact">Contact Us</Link>
+                            </li>
+                            <li className="nav-item">
                             <Link className="nav-link" to="/login">LogIn</Link>
                             </li>
                             <li className="nav-item">
@@ -50,6 +56,12 @@ const Header = ({history}) => {
                             </li>
                             <li className="nav-item">
                             <Link className="nav-link" to="/products">Products</Link>
+                            </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to="/aboutus">About Us</Link>
+                            </li>
+                            <li className="nav-item">
+                            <Link className="nav-link" to="/contact">Contact Us</Link>
                             </li>
                             {getTokenInStorage() && getUserRole() === 1 && (
                                 <Fragment>

@@ -65,7 +65,7 @@ export default class SingleProduct extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <h2 className="display-6 text-center text-secondary mb-5">{this.state.loading || !this.state.product ? (`Product`):(`Product ID: ${this.state.product.data._id}`)}</h2>
+                            <h2 className="display-6 text-center text-secondary mb-5">{this.state.loading || !this.state.product ? (`Product`):(`2Product ID: ${this.state.product.data._id}`)}</h2>
                         </div>
                         
                             {getTokenInStorage() && getUserRole() === 1 && (

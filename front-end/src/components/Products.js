@@ -23,7 +23,7 @@ export default class Products extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h2 className="display-4 text-center text-secondary mb-5">Products</h2>
+                            <h2 className="display-4 text-center text-secondary mb-3">Products</h2>
                         </div>
                     </div>
                     {this.state.loading || !this.state.products ? (
@@ -43,9 +43,9 @@ export default class Products extends Component {
                     ): (
                         <Fragment>
                             {getTokenInStorage() && getUserRole() === 1 && (
-                                <div className="row">
+                                <div className="row py-3">
                                     <div className="col-12">
-                                        <Link to="/products/addproduct" class="btn btn-outline-secondary">Add New Product</Link>
+                                        <Link to="/addproduct" class="btn btn-outline-secondary">Add New Product</Link>
                                     </div>
                                 </div>
                             )}
@@ -60,7 +60,7 @@ export default class Products extends Component {
                                                 <h5 className="card-title">{data.title}</h5>
                                                 <p className="card-text">{data.description}</p>
                                                 <p className="prod-price">Price: ${data.price}</p>
-                                                <Link to={`products/${data._id}`} className="btn btn-secondary w-100">View Details</Link>
+                                                <Link to={`products/${data._id}`} className="btn btn-secondary w-100">View Product</Link>
                                             </div>
                                         </div>
                                     </div>

@@ -10,7 +10,7 @@ const UserRoute = ({component: Component, ...rest}) => {
                 getTokenInStorage() && getUserRole() === 0 ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to='/api/user/login' />
+                    <Redirect to='/login' />
                 )
             }
        />

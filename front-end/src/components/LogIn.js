@@ -94,7 +94,7 @@ const LogIn = () => {
                         <input type="password" className="form-control bg-light text-secondary" id="password" name="password" value={password} onChange={handleChange} required />
                     </div>
                     <div className="col-md-12 d-flex justify-content-center">
-                        <button type="submit" className="btn btn-outline-light w-100 mt-3">LogIn</button>
+                        <button type="submit" className="btn btn-lg btn-outline-light w-100 mt-3">LogIn</button>
                     </div>
                     {errorMsg && showErrorMessage(errorMsg)}
                     <div className="text-center">{loading && showLoading(loading)}</div>

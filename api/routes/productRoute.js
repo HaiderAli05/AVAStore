@@ -20,7 +20,7 @@ router.post('/addproduct',adminVerify, upload.single('productImg'), async (req,r
                     productImg: imgCloudPath.secure_url,
                     title: req.body.title,
                     description: req.body.description,
-                    price: req.body.price,
+                    price: req.body.price || 0,
                     delivery: req.body.delivery
                 });
                 const savedProduct = await product.save();

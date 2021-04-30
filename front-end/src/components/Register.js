@@ -122,7 +122,7 @@ const Register = () => {
                         <input type="text" className="form-control bg-light text-secondary" id="country" name="country" value={country} onChange={handleChange} required />
                     </div>
                     <div className="col-md-12">
-                        <button type="submit" className="btn btn-outline-light w-100 mt-3">Register</button>
+                        <button type="submit" className="btn btn-lg btn-outline-light w-100 mt-3">Register</button>
                     </div>
                     {errorMsg && showErrorMessage(errorMsg)}
                     {successMsg && showSuccessMessage(successMsg)}

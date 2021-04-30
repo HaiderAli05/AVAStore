@@ -10,7 +10,7 @@ const AdminRoute = ({component: Component, ...rest}) => {
                 getTokenInStorage() && getUserRole() === 1 ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to='/api/user/login' />
+                    <Redirect to='/login' />
                 )
             }
        />
