@@ -9,8 +9,11 @@ import {
 
 
 const Header = ({history}) => {
-    let {firstName} = getUserInStorage()
-    let userFirstName = firstName;
+    const userFirstName = () => {
+        let username = getUserInStorage().firstName;
+        return username;
+    }
+    let username = getUserInStorage().firstName;
     const logout = () => {
         handleSignout(() => {
             history.push('/login');
@@ -81,7 +84,7 @@ const Header = ({history}) => {
                             {getTokenInStorage() && getUserRole() === 0 && (
                                 <Fragment>
                                     <li class="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">{userFirstName}</Link>
+                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">{userFirstName()}</Link>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <li><Link className="dropdown-item text-secondary" to="/user/dashboard">Profile</Link></li>
                                             <li><Link className="dropdown-item text-secondary" to="/orders/:id">Orders</Link></li>
