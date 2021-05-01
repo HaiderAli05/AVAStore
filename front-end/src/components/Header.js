@@ -9,7 +9,8 @@ import {
 
 
 const Header = ({history}) => {
-    let userFirstName = getUserInStorage().firstName;
+    let {firstName} = getUserInStorage()
+    let userFirstName = firstName;
     const logout = () => {
         handleSignout(() => {
             history.push('/login');
