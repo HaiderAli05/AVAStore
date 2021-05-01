@@ -11,6 +11,7 @@ export default class SingleProduct extends Component {
         super(props);
         this.delProduct = this.delProduct.bind(this);
         this.editProduct = this.editProduct.bind(this);
+        this.addOrder = this.addOrder.bind(this);
         this.state = {
             loading: true,
             product: null,
@@ -43,6 +44,10 @@ export default class SingleProduct extends Component {
         const res = await response.json();
         this.setState({loading:false, redirectToProducts:"/products", res_message: res.message});
     }
+    async addOrder(){
+        this.setState({loading:false});
+
+    }
     editProduct(){
         this.setState({
             loading:true,
@@ -73,15 +78,15 @@ export default class SingleProduct extends Component {
                                     <div className="col-md-12 d-flex pb-3">
                                         <span className="ms-auto">
                                             <button class="btn btn-outline-secondary me-2" onClick={this.editProduct}>Edit</button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delProduct">
                                                 Delete
                                             </button>
                                         </span>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="delProduct" tabindex="-1" aria-labelledby="delProductLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+                                                    <h5 class="modal-title" id="delProductLabel">Delete Product</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -135,7 +140,27 @@ export default class SingleProduct extends Component {
                                             <input type="text" className="form-control" id="delivery" name="delivery" placeholder="Delivery" value={this.state.product.data.delivery} />
                                         </div>
                                         </fieldset>
-                                        <button type="submit" className="btn btn-lg btn-secondary mt-3 w-100">Buy Now</button>
+                                        <button type="submit" className="btn btn-lg btn-secondary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#addOrder" >Buy Now</button>
+                                        <div class="modal fade" id="addOrder" tabindex="-1" aria-labelledby="addOrderLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addOrderLabel">Add Order</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div className="mb-3">
+                                                        <label for="quantity" className="form-label">Please set the quantity for this product.</label>
+                                                        <input type="number" className="form-control" id="quantity" name="quantity" placeholder="Quantity" value=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-danger" onClick={this.addOrder} data-bs-dismiss="modal">Order Now</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="text-center">{this.state.loading && showLoading()}</div>
                                     </div>
                                 </div>

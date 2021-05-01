@@ -2,25 +2,31 @@ import React, {Fragment, Component} from 'react';
 import {Redirect} from 'react-router-dom';
 import {
     getTokenInStorage,
+    getUserInStorage,
     getUserRole
 } from '../helpers/localStorage.js';
 import { showLoading } from '../helpers/loading.js';
+import { showErrorMessage } from '../helpers/message.js'; 
 
 export default class SingleProduct extends Component {
     constructor(props) {
         super(props);
         this.delProduct = this.delProduct.bind(this);
         this.editProduct = this.editProduct.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.addOrder = this.addOrder.bind(this);
         this.state = {
             loading: true,
             product: null,
+            quantity: 1,
             redirectToProducts: null,
             redirectToEditProduct: null,
+            redirectToOrders: null,
             res_message: null,
+            errorMsg: null,
         }
     }
     async componentDidMount () {
-        // let ProductId = this.props.match.params.id;
         const { id } = this.props.match.params;
         const url = `https://avastore.herokuapp.com/api/products/${id}`;
         const response = await fetch(url);
@@ -30,7 +36,6 @@ export default class SingleProduct extends Component {
     async delProduct () {
         this.setState({loading:true});
         const token = getTokenInStorage();
-        // let ProductId = this.props.match.params.id;
         const { id } = this.props.match.params;
         const url = `https://avastore.herokuapp.com/api/products/${id}`;
         const response = await fetch(url, {
@@ -43,6 +48,41 @@ export default class SingleProduct extends Component {
         const res = await response.json();
         this.setState({loading:false, redirectToProducts:"/products", res_message: res.message});
     }
+    // Event Handlers
+    handleChange = (evt) => {
+        this.setState({quantity : evt.target.value,});
+    };
+    async addOrder(){
+        this.setState({errorMsg:null})
+        this.setState({loading:true});
+        let userId = getUserInStorage().id;
+        let userEmail = getUserInStorage().email;
+        // const { id } = this.props.match.params;
+        const productId = this.props.match.params.id;
+        let {title, price, delivery} = this.state.product.data;
+        let quantity = this.state.quantity;
+        let totalPrice = price * quantity;
+        let data = {userId,userEmail,productId,title,unitPrice:price,quantity,totalPrice,status:'Under Review'};
+
+        
+        const token = getTokenInStorage();
+        const url = 'https://avastore.herokuapp.com/api/orders/addorder';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 
+                'token': token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+        const res = await response.json();
+        console.log(res)
+        if(res.error === null){
+            this.setState({loading:false, redirectToOrders:"/orders/:id"});
+        }else{
+            this.setState({loading:false, errorMsg: res.message});
+        }
+    }
     editProduct(){
         this.setState({
             loading:true,
@@ -52,13 +92,13 @@ export default class SingleProduct extends Component {
     
     render() {
         if (this.state.redirectToProducts) {
-            this.setState({
-                loading:false,
-            })
             return <Redirect to={this.state.redirectToProducts} />
         }
         if (this.state.redirectToEditProduct) {
             return <Redirect to={this.state.redirectToEditProduct} />
+        }
+        if (this.state.redirectToOrders) {
+            return <Redirect to={this.state.redirectToOrders} />
         }
         return (
             <section className="py-custom">
@@ -73,15 +113,15 @@ export default class SingleProduct extends Component {
                                     <div className="col-md-12 d-flex pb-3">
                                         <span className="ms-auto">
                                             <button class="btn btn-outline-secondary me-2" onClick={this.editProduct}>Edit</button>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delProduct">
                                                 Delete
                                             </button>
                                         </span>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="delProduct" tabindex="-1" aria-labelledby="delProductLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+                                                    <h5 class="modal-title" id="delProductLabel">Delete Product</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -135,7 +175,28 @@ export default class SingleProduct extends Component {
                                             <input type="text" className="form-control" id="delivery" name="delivery" placeholder="Delivery" value={this.state.product.data.delivery} />
                                         </div>
                                         </fieldset>
-                                        <button type="submit" className="btn btn-lg btn-secondary mt-3 w-100">Buy Now</button>
+                                        <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#addOrder">Buy Now</button>
+                                        <div className="my-3">{this.state.errorMsg && showErrorMessage(this.state.errorMsg)}</div>
+                                        <div class="modal fade" id="addOrder" tabindex="-1" aria-labelledby="addOrderLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addOrderLabel">Add Order</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div className="mb-3">
+                                                        <label for="quantity" className="form-label">Please set the quantity for this product.</label>
+                                                        <input type="number" className="form-control" id="quantity" name="quantity" placeholder="quantity" value={this.state.quantity} onChange={(evt)=>{this.handleChange(evt)}} required/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={this.addOrder}>Order Now</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="text-center">{this.state.loading && showLoading()}</div>
                                     </div>
                                 </div>
