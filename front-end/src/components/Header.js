@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import {
     getTokenInStorage,
@@ -9,11 +9,7 @@ import {
 
 
 const Header = ({history}) => {
-    const userFirstName = () => {
-        let username = getUserInStorage().firstName;
-        return username;
-    }
-    let username = getUserInStorage().firstName;
+    const [user, setUser] = useState(getUserInStorage().firstName);
     const logout = () => {
         handleSignout(() => {
             history.push('/login');
@@ -84,7 +80,7 @@ const Header = ({history}) => {
                             {getTokenInStorage() && getUserRole() === 0 && (
                                 <Fragment>
                                     <li class="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">{userFirstName()}</Link>
+                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">{user}</Link>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <li><Link className="dropdown-item text-secondary" to="/user/dashboard">Profile</Link></li>
                                             <li><Link className="dropdown-item text-secondary" to="/orders/:id">Orders</Link></li>

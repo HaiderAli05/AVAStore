@@ -59,7 +59,6 @@ export default class SingleProduct extends Component {
         this.setState({loading:true});
         let userId = getUserInStorage().id;
         let userEmail = getUserInStorage().email;
-        // const { id } = this.props.match.params;
         const productId = this.props.match.params.id;
         let {title, price, delivery} = this.state.product.data;
         let quantity = this.state.quantity;
