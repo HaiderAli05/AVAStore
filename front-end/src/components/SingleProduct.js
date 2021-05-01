@@ -15,6 +15,7 @@ export default class SingleProduct extends Component {
         this.editProduct = this.editProduct.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.addOrder = this.addOrder.bind(this);
+        this.goToLogin = this.goToLogin.bind(this);
         this.state = {
             loading: true,
             product: null,
@@ -22,6 +23,7 @@ export default class SingleProduct extends Component {
             redirectToProducts: null,
             redirectToEditProduct: null,
             redirectToOrders: null,
+            redirectToLogin: null,
             res_message: null,
             errorMsg: null,
         }
@@ -83,6 +85,10 @@ export default class SingleProduct extends Component {
             this.setState({loading:false, errorMsg: res.message});
         }
     }
+    goToLogin(){
+        this.setState({redirectToLogin: '/login'})
+
+    }
     editProduct(){
         this.setState({
             loading:true,
@@ -99,6 +105,9 @@ export default class SingleProduct extends Component {
         }
         if (this.state.redirectToOrders) {
             return <Redirect to={this.state.redirectToOrders} />
+        }
+        if (this.state.redirectToLogin) {
+            return <Redirect to={this.state.redirectToLogin} />
         }
         return (
             <section className="py-custom">
@@ -175,6 +184,8 @@ export default class SingleProduct extends Component {
                                             <input type="text" className="form-control" id="delivery" name="delivery" placeholder="Delivery" value={this.state.product.data.delivery} />
                                         </div>
                                         </fieldset>
+                                        {getTokenInStorage() && getUserInStorage() ? (
+                                        <Fragment>
                                         <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#addOrder">Buy Now</button>
                                         <div className="my-3">{this.state.errorMsg && showErrorMessage(this.state.errorMsg)}</div>
                                         <div class="modal fade" id="addOrder" tabindex="-1" aria-labelledby="addOrderLabel" aria-hidden="true">
@@ -197,6 +208,9 @@ export default class SingleProduct extends Component {
                                                 </div>
                                             </div>
                                         </div>
+                                        </Fragment>):(
+                                            <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" onClick={this.goToLogin}>Buy Now</button>
+                                        )}
                                         <div className="text-center">{this.state.loading && showLoading()}</div>
                                     </div>
                                 </div>
