@@ -66,7 +66,7 @@ const Header = ({history}) => {
                             {getTokenInStorage() && getUserRole() === 1 && (
                                 <Fragment>
                                     <li class="nav-item dropdown">
-                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</Link>
+                                        <Link className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">{getUserInStorage().firstName}</Link>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <li><Link className="dropdown-item text-secondary" to="/admin/dashboard">Profile</Link></li>
                                             <li><Link className="dropdown-item text-secondary" to="/orders">Orders</Link></li>

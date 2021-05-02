@@ -65,7 +65,6 @@ export default class SingleProduct extends Component {
         let totalPrice = price * quantity;
         let data = {userId,userEmail,productId,title,unitPrice:price,quantity,totalPrice,status:'Under Review'};
 
-        
         const token = getTokenInStorage();
         const url = 'https://avastore.herokuapp.com/api/orders/addorder';
         const response = await fetch(url, {
@@ -79,7 +78,7 @@ export default class SingleProduct extends Component {
         const res = await response.json();
         console.log(res)
         if(res.error === null){
-            this.setState({loading:false, redirectToOrders:"/orders/:id"});
+            this.setState({loading:false, redirectToOrders:`/orders/${userId}`});
         }else{
             this.setState({loading:false, errorMsg: res.message});
         }
