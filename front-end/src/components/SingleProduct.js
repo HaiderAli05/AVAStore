@@ -1,5 +1,5 @@
 import React, {Fragment, Component} from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import {
     getTokenInStorage,
     getUserInStorage,
@@ -60,7 +60,7 @@ export default class SingleProduct extends Component {
         let userId = getUserInStorage().id;
         let userEmail = getUserInStorage().email;
         const productId = this.props.match.params.id;
-        let {title, price, delivery} = this.state.product.data;
+        let {title, price} = this.state.product.data;
         let quantity = this.state.quantity;
         let totalPrice = price * quantity;
         let data = {userId,userEmail,productId,title,unitPrice:price,quantity,totalPrice,status:'Under Review'};
@@ -155,7 +155,7 @@ export default class SingleProduct extends Component {
                                         
                                         <div className="bg-white border rounded shadow single-productImg_section">
                                             <div className="productImg">
-                                                <img src={this.state.product.data.productImg} className="newProductImg" alt="Product Image"/>
+                                                <img src={this.state.product.data.productImg} className="newProductImg" alt="Product Img"/>
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@ export default class SingleProduct extends Component {
                                             <input type="text" className="form-control" id="delivery" name="delivery" placeholder="Delivery" value={this.state.product.data.delivery} />
                                         </div>
                                         </fieldset>
-                                        {getTokenInStorage() && getUserInStorage() ? (
+                                        {getTokenInStorage() && getUserInStorage() && getUserRole() === 0 ? (
                                         <Fragment>
                                         <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" data-bs-toggle="modal" data-bs-target="#addOrder">Buy Now</button>
                                         <div className="my-3">{this.state.errorMsg && showErrorMessage(this.state.errorMsg)}</div>
@@ -207,7 +207,10 @@ export default class SingleProduct extends Component {
                                             </div>
                                         </div>
                                         </Fragment>):(
-                                            <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" onClick={this.goToLogin}>Buy Now</button>
+                                            <Fragment>
+                                            <div className="my-3">{showErrorMessage(<p className="lead">Please <Link to="/login" className="text-secondary">LogIn</Link> first to buy this Product.</p>)}</div>
+                                            <button type="button" className="btn btn-lg btn-secondary mt-3 w-100" onClick={this.goToLogin} disabled>Buy Now</button>
+                                            </Fragment>
                                         )}
                                         <div className="text-center">{this.state.loading && showLoading()}</div>
                                     </div>

@@ -2,27 +2,20 @@ import React, { Component } from 'react'
 import {Redirect} from 'react-router-dom';
 import defaultPic from '../img/uploadPic.png';
 import { showLoading } from '../helpers/loading.js';
-import { showErrorMessage , showSuccessMessage } from '../helpers/message.js'; 
-// import isEmpty from 'validator/lib/isEmpty';
-import {
-    getTokenInStorage,
-    getUserRole
-} from '../helpers/localStorage.js';
+import { showErrorMessage } from '../helpers/message.js'; 
+import {getTokenInStorage} from '../helpers/localStorage.js';
 
 export default class AddProduct extends Component {
     constructor(props) {
         super(props);
         this.handleUpload = this.handleUpload.bind(this);
+        this.productImg = React.createRef();
         this.handleChange = this.handleChange.bind(this);
+        this.handleImgPreview = this.handleImgPreview.bind(this);
         this.state = {
             imgNotAdded: defaultPic,
             loading: false,
-            res_message: false,
-            productImg: '',
-            title: 'Test Product',
-            description: 'This is desc',
-            price: 10,
-            delivery: '',
+            productImgPreview: null,
             errorMsg: false,
             redirectToProducts: null
         }
@@ -30,24 +23,18 @@ export default class AddProduct extends Component {
     
     // Event Handlers
     handleChange = (evt) => {
-        let {title, description, price, delivery} = evt.target.value;
-        let productImg = evt.target.files[0];
-        this.setState({productImg, title, description, price, delivery});
-        console.log(productImg);
+        this.setState({[evt.target.name] : evt.target.value});
+    };
+    handleImgPreview = (evt) => {
+        this.setState({productImgPreview: URL.createObjectURL(evt.target.files[0])})
     };
     handleUpload = async (evt) => {
-        this.setState({loading:true});
-        let {productImg, title, description, price, delivery} = this.state;
-        // if(isEmpty(title) || isEmpty(description) || isEmpty(price)){
-            
-        //     this.setState({loading:false, errorMsg: 'All fields are required'});
-        // }
-        let data = new FormData();
         evt.preventDefault();
+        this.setState({loading:true});
 
-        
-        // let data = {productImg, title, description, price, delivery};
-        // let myForm = document.getElementById('addProduct');
+        let productImg = this.productImg.current.files[0];
+        let {title, description, price, delivery} = this.state;
+        let data = new FormData();
         
         data.append('productImg', productImg);
         data.append('title', title);
@@ -61,7 +48,7 @@ export default class AddProduct extends Component {
         const response = await fetch(url, {
             method: 'POST',
             headers: { 
-                'token': token
+                'token': token,
             },
             body: data
           });
@@ -72,7 +59,6 @@ export default class AddProduct extends Component {
             this.setState({loading:false, errorMsg: res.message});
         }
         
-        console.log(this.state.errorMsg)
     }
     render() {
         if (this.state.redirectToProducts) {
@@ -90,21 +76,21 @@ export default class AddProduct extends Component {
                         <div className="text-center">{showLoading()}</div>
                     ): (
                         <div className="row">
-                            <form method="post" action="/api/products/addproduct" className="text-secondary" enctype="multipart/form-data" id="addProduct">
+                            <form method="post" action="/api/products/addproduct" onSubmit={this.handleUpload} className="text-secondary" enctype="multipart/form-data" id="addProduct">
                                 <div className="row">
                                     <div className="col-md-6 mb-4">
                                         
                                         <div className="bg-white border rounded shadow productImg_section">
                                             <div className="productImg">
-                                                <img src={this.state.productImg ? (
-                                                    this.state.productImg
+                                                <img src={this.state.productImgPreview ? (
+                                                    this.state.productImgPreview
                                                 ):(
                                                     this.state.imgNotAdded 
-                                                )} className="newProductImg" alt="Product Image"/>
+                                                )} className="newProductImg" alt="Product Img"/>
                                             </div>
                                             
                                             <div className="input-group">
-                                                <input type="file" className="form-control" id="productImg" name="productImg" onChange={(evt)=>{this.handleChange(evt)}} />
+                                                <input type="file" className="form-control" id="productImg" name="productImg" ref={this.productImg}  onChange={(evt)=>{this.handleImgPreview(evt)}} />
                                                 <label className="input-group-text productImg_label text-secondary bg-white text-uppercase" for="productImg">Upload Image</label>
                                             </div>
                                         </div>
@@ -131,7 +117,7 @@ export default class AddProduct extends Component {
                                             <input type="text" className="form-control" id="delivery" name="delivery" placeholder="Delivery" value={this.state.delivery} onChange={(evt)=>{this.handleChange(evt)}} />
                                         </div>
                                         
-                                        <button type="submit" className="btn btn-lg btn-secondary mt-3 w-100" onClick={(evt)=>{this.handleUpload(evt)}}>Add Now</button>
+                                        <button type="submit" className="btn btn-lg btn-secondary mt-3 w-100" >Add Now</button>
                                         <div className="my-3">{this.state.errorMsg && showErrorMessage(this.state.errorMsg)}</div>
                                         <div className="text-center">{this.state.loading && showLoading()}</div>
                                     </div>

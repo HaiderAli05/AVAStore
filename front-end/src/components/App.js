@@ -8,7 +8,6 @@ import NotFound from './NotFound.js';
 import Footer from './Footer.js';
 import Products from './Products.js';
 import SingleProduct from './SingleProduct.js';
-// import SingleProduct2 from './SingleProduct2.js';
 import AdminDashboard from './AdminDashboard.js';
 import UserDashboard from './UserDashboard.js';
 import AdminRoute from './AdminRoute.js';
@@ -30,7 +29,6 @@ const App = () => {
             <Route exact path='/' component={Home} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' component={SingleProduct} />
-            {/* <Route exact path='/products/:id' component={SingleProduct2} /> */}
             <Route exact path='/aboutus' component={AboutUs} />
             <Route exact path='/contact' component={ContactUs} />
             <AdminRoute exact path='/addproduct' component={AddProduct} />

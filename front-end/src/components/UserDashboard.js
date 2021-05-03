@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react';
+import {
+    getUserInStorage
+} from '../helpers/localStorage.js';
 
-const UserDashboard = () => {
-    return (
-        <section>
+export default class UserDashboard extends Component {
+    state = {
+    }
+    componentDidMount(){
+        let person;
+        if(getUserInStorage().role === 1){
+            person = "Admin";
+        }else{
+            person = "User";
+        }
+        let {firstName,lastName,email,phone,country} = getUserInStorage();
+        this.setState({
+            role: person,
+            firstName,
+            lastName,
+            email,
+            phone,
+            country,
+        })
+    }
+    render() {
+        return (
+            <section>
             <div className="container py-5">
                 <h2 className="display-5 text-secondary m-0 text-center">Profile</h2>
                 <div className="row">
@@ -11,25 +34,29 @@ const UserDashboard = () => {
                             <thead>
                                 <tr>
                                 <th scope="col">Role</th>
-                                <th scope="col">User</th>
+                                <th scope="col">{this.state.role}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>First Name:</td>
-                                    <td>John</td>
+                                    <td>{this.state.firstName}</td>
                                 </tr>
                                 <tr>
                                     <td>Last Name:</td>
-                                    <td>Doe</td>
+                                    <td>{this.state.lastName}</td>
                                 </tr>
                                 <tr>
                                     <td>Email:</td>
-                                    <td>admin@admin.com</td>
+                                    <td>{this.state.email}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone:</td>
+                                    <td>{this.state.phone}</td>
                                 </tr>
                                 <tr>
                                     <td>Country:</td>
-                                    <td>XYZ</td>
+                                    <td>{this.state.country}</td>
                                 </tr>
                                 
                             </tbody>
@@ -38,7 +65,6 @@ const UserDashboard = () => {
                 </div>
             </div>
         </section>
-    )
+        )
+    }
 }
-
-export default UserDashboard
